@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	{{ block.super }} Создать
+{% endblock %}
+{% block content %}
+    <div class="container mx-auto px-4 py-8">
+        <form method="POST" enctype="multipart/form-data"
+              class="max-w-2xl mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
+            {% csrf_token %}
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <div class="w-1 h-8 bg-red-500 mr-2"></div>
+                Добавить новое Аниме
+            </h2>
+            <div class="space-y-4 mb-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Название:</label>
+                    {{ form.title }}
+                </div>
+                <div class="">
+                    <label class="block text-sm font-medium mb-2">Описание:</label>
+                    {{ form.description }}
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Дата выхода:</label>
+                        {{ form.release_date }}
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Епизоды:</label>
+                       {{ form.episodes }}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2">Жанры:</label>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                    {{ form.genres }}
+                </div>
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2">Изображения:</label>
+                <div class="space-y-4">
+                    {% if object %}
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            {% for image in object.images.all %}
+                                <div class="relative">
+                                    <img src="{{ image.image.url }}" alt="" class="w-full h-32 object-cover rounded">
+                                    <button type="button" data-image-id="{{ image.id }}"
+                                            class="absolute top-2 right-2 bg-red-500 p-1 rounded-full">
+                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
+                                             viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M6 18L18 6M6 6l12 12"/>
+
+
+                                        </svg>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {{ form.images }}
+                </div>
+            </div>
+
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2">Статус:</label>
+                {{ form.type }}
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2">Тип:</label>
+                {{ form.status }}
+            </div>
+            <div class="flex justify-end">
+                <button type="submit"
+                        class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg transition duration-200">
+                   Создать Аниме
+                </button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
