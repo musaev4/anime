@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,127 +10,22 @@
     <link rel="stylesheet" href="{% static 'core/navbar.css' %}">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-[#0f0f23] text-white min-h-screen px-12">
-<nav class="bg-[#0f0f23] py-4 px-6 lg:px-24 flex items-center justify-between border-b border-gray-800 relative">
-    <button class="hamburger lg:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5"
-            onclick="toggleMenu()">
-        <span class="hamburger-line line1 w-6 h-0.5 bg-white block"></span>
-        <span class="hamburger-line line2 w-6 h-0.5 bg-white block"></span>
-        <span class="hamburger-line line3 w-6 h-0.5 bg-white block"></span>
-    </button>
-    <a href="{% url 'anime:home' %}" class="text-2xl font-bold z-20">
-        <span class="text-white">Ani</span><span class="text-red-500">me</span>
-    </a>
-    <div class="hidden lg:flex items-center space-x-12">
-        <a href="{% url 'anime:home' %}" class="text-gray-400 nav-link">
-            Главная
-        </a>
-        <div class="relative group">
-            <a href="#" class="text-gray-400 flex items-center space-x-2 nav-link">
-                <span>Меню</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover:rotate-90"
-                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                </svg>
-            </a>
-            <div class="absolute hidden group-hover:block bg-gray-800  py-2 w-38 z-40">
-                <a href="{% url 'anime:anime_create' %}"
-                   class="block px-4 py-2 text-gray-400 hover:bg-gray-700 nav-link">Добавить аниме</a>
-                <a href="#" class="block px-4 py-2 text-gray-400 hover:bg-gray-700 nav-link">Список аниме</a>
-            </div>
-        </div>
-        <a href="#" class="text-gray-400 nav-link">
-            О нас
-        </a>
-        <a href="#" class="text-gray-400 nav-link">
-            Контакты
-        </a>
-    </div>
-    <div class="flex items-center space-x-6">
-        <div class="hidden lg:inline relative">
-            <input type="text" placeholder="Поиск аниме.."
-                   class="search-input bg-gray-800 text-white rounded-full py-2 px-4 pr-10 focus:outline-none focus:ring-2 focus:ring-red-500 w-40"/>
-            <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                     stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                </svg>
-            </button>
-        </div>
-        <button class="text-gray-400 hover:text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-            </svg>
-        </button>
-    </div>
-    <div class="mobile-menu fixed top-0 left-0 w-64 h-screen bg-[#0f0f23] z-10 lg:hidden pt-20 px-6 border-r border-gray-800">
-        <div class="flex flex-col space-y-6">
-            <div class="relative mb-4">
-                <input type="text"
-                       placeholder="Search anime..."
-                       class="w-full bg-gray-800 text-white rounded-full py-2 px-4 pr-10 focus:outline-none focus:ring-2 focus:ring-red-500"
-                />
-                <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                </button>
-            </div>
-            <a href="{% url 'anime:home' %}"
-               class="block text-gray-400 nav-link text-center">
-                Главная
-            </a>
-            <div class="relative">
-                <button onclick="toggleCategories()"
-                        class="text-gray-400 flex items-center justify-between w-full nav-link">
-                    <span>Categories</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 category-arrow" fill="none"
-                         viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </button>
-                <div class="categories-submenu hidden mt-4 ml-4 space-y-4">
-                    <a href="{% url 'anime:anime_create' %}" class="block text-gray-400 nav-link">Добавить Аниме</a>
-                    <a href="#" class="block text-gray-400 nav-link">Список</a>
-                </div>
-            </div>
-            <a href="#" class="text-gray-400 nav-link">
-                О нас
-            </a>
-            <a href="#" class="text-gray-400 nav-link">
-                Контакты
-            </a>
-        </div>
-    </div>
-    <div class="overlay fixed inset-0 bg-black/50 z-0 hidden lg:hidden" onclick="toggleMenu()"></div>
-</nav>
-{% block content %}
-{% endblock %}
-<footer class="bg-[#0f0f23] py-8 border-t border-gray-800 mt-12 -mx-12 px-12">
-    <div class="container mx-auto">
-        <nav class="flex flex-wrap justify-center space-x-8 mb-6">
-            <a href="{% url 'anime:home' %}"
-               class="text-gray-400 hover:text-white transition-colors nav-link">Главная</a>
-            <a href="#" class="text-gray-400 hover:text-white transition-colors nav-link">О нас</a>
-            <a href="#" class="text-gray-400 hover:text-white transition-colors nav-link"></a>
-            <a href="#" class="text-gray-400 hover:text-white transition-colors nav-link">Контакты</a>
-        </nav>
-        <div class="text-center text-gray-400">
-            <p>Copyright ©2024 All rights reserved
-                <span class="text-red-500">❤</span> by
-                <a href="https://github.com/musaev4" class="text-red-500 hover:text-red-400">Ibragim</a>
-            </p>
-        </div>
-    </div>
-</footer>
+<body class="bg-[#0f0f23] text-white min-h-screen flex flex-col">
+
+<div class="flex flex-col min-h-screen">
+
+    {% include 'components/navbar.html' %}
+
+    <main class="flex-grow px-4 sm:px-6 lg:px-24">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    {% include 'components/footer.html' %}
+</div>
+
 {% block scripts %}
     <script src="{% static 'core/navbar.js' %}"></script>
 {% endblock %}
-
 </body>
 </html>

@@ -4,187 +4,213 @@
     {{ block.super }} {{ anime.title }}
 {% endblock %}
 {% block content %}
-    <div class="container mx-auto px-4 py-8">
-        <div class="relative h-[400px] rounded-xl overflow-hidden mb-8">
+    {% include 'components/messages.html' %}
+    <div class="container mx-auto px-4 py-4 sm:py-8">
+        <!-- Уменьшаем высоту баннера на мобильных -->
+        <div class="relative h-[250px] sm:h-[400px] rounded-xl overflow-hidden mb-4 sm:mb-8">
             {% if anime.images.first %}
                 <img src="{{ anime.images.first.image.url }}" alt="{{ anime.title }}"
                      class="w-full h-full object-cover">
             {% endif %}
             <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
-            <div class="absolute bottom-0 left-0 p-8">
-                <div class="flex items-center space-x-2 mb-4">
+            <div class="absolute bottom-0 left-0 p-4 sm:p-8">
+                <!-- Адаптивные жанры -->
+                <div class="flex flex-wrap items-center gap-2 mb-3 sm:mb-4">
                     {% for genre in anime.genres.all %}
-                        <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm">{{ genre.name }}</span>
+                        <span class="bg-red-500 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm">{{ genre.name }}</span>
                     {% endfor %}
                 </div>
-                <h1 class="text-4xl font-bold text-white mb-2">{{ anime.title }}</h1>
-                <div class="flex items-center space-x-4 text-gray-300">
+                <!-- Адаптивный заголовок -->
+                <h1 class="text-2xl sm:text-4xl font-bold text-white mb-2">{{ anime.title }}</h1>
+                <!-- Адаптивная информация -->
+                <div class="flex flex-wrap items-center gap-2 sm:gap-4 text-gray-300 text-sm sm:text-base">
                     <div class="flex items-center">
-                        <svg class="w-5 h-5 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                         </svg>
                         <span>{{ anime.average_rating }}</span>
                     </div>
-                    <span>•</span>
-                    <span>{{ anime.episodes }} Episodes</span>
-                    <span>•</span>
+                    <span class="hidden sm:inline">•</span>
+                    <span>{{ anime.episodes }} Епизод(а/ов)</span>
+                    <span class="hidden sm:inline">•</span>
                     <span>{{ anime.release_date|date:"Y" }}</span>
-                </div>{% if user.is_authenticated %}
-                <a href="{% url 'anime:anime_delete' anime.id %}">
+                </div>
 
-
-                    <div class="flex gap-4 p-4">
-                        <button class="px-6 py-2 bg-red-500 text-white font-medium rounded-lg
-                   transform hover:scale-105 transition-all duration-300
-                   hover:bg-red-600 hover:shadow-lg hover:shadow-red-300/50
-                   active:scale-95 focus:outline-none focus:ring-2
-                   focus:ring-red-500 focus:ring-offset-2">
-                            <div class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                {% if user.is_authenticated %}
+                <!-- Адаптивные кнопки действий -->
+                <div class="flex flex-wrap gap-2 sm:gap-4 mt-4">
+                    <a href="{% url 'anime:anime_delete' anime.id %}" class="w-full sm:w-auto">
+                        <button class="w-full sm:w-auto px-4 sm:px-6 py-2 bg-red-500 text-white text-sm sm:text-base font-medium rounded-lg
+                               transform hover:scale-105 transition-all duration-300
+                               hover:bg-red-600 hover:shadow-lg hover:shadow-red-300/50
+                               active:scale-95 focus:outline-none focus:ring-2
+                               focus:ring-red-500 focus:ring-offset-2">
+                            <div class="flex items-center justify-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24"
                                      stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                 </svg>
                                 Удалить
                             </div>
-                </a>
-                </button>
-                <a href="{% url 'anime:anime_update' anime.id %}">
-                    <button class="px-6 py-2 bg-purple-500 text-white font-medium rounded-lg
-                   transform hover:scale-105 transition-all duration-300
-                   hover:bg-purple-600 hover:shadow-lg hover:shadow-purple-300/50
-                   active:scale-95 focus:outline-none focus:ring-2
-                   focus:ring-purple-500 focus:ring-offset-2">
-                        <div class="flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                 stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                            </svg>
-                            Обновить
-                        </div>
-                    </button>
-                </a>
-            {% endif %}
-            </div>
-        </div>
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2">
-            <div class="bg-gray-800 rounded-xl p-6 mb-8">
-                <h2 class="text-xl font-bold mb-4">Обзор</h2>
-                <p class="text-gray-300">{{ anime.description }}</p>
-                <span>{{ anime.get_status_display }}</span>
-                <span>•</span>
-                <span>{{ anime.get_type_display }}</span>
-            </div>
-            <div class="bg-gray-800 rounded-xl p-6 mb-8">
-                <h2 class="text-xl font-bold mb-4">Серии</h2>
-                <div class="space-y-4">
-                    {% for episode in anime.anime_episodes.all %}
-                        <div class="flex items-center justify-between p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition">
-                            <div>
-                                <h3 class="font-medium">{{ episode.title }}</h3>
-                                <p class="text-sm text-gray-400">Released: {{ episode.release_date|date }}</p>
-                            </div>
-                            {% if episode.video %}
-                                <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition">
-                                    Смотреть сейчас
-                                </button>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="bg-gray-800 rounded-xl p-6">
-                <h2 class="text-xl font-bold mb-4">Комментарии ({{ anime.comments.count }})</h2>
-
-                {% if user.is_authenticated %}
-                    <form method="post" class="mb-8">
-                        {% csrf_token %}
-                        <textarea name="comment" rows="3" class="w-full bg-gray-700 rounded-lg p-4 text-white"
-                                  placeholder="Ваш комментарий..."></textarea>
-                        <button type="submit"
-                                class="mt-2 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg transition">
-                            Отправить
                         </button>
-                    </form>
-                {% endif %}
-                <div class="space-y-6">
-                    {% for comment in anime.comments.all %}
-                        <div class="flex space-x-4">
-                            <div class="flex-shrink-0">
-                                <div class="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center">
-                                    {{ comment.user.username|first|upper }}
-                                </div>
+                    </a>
+                    <a href="{% url 'anime:anime_update' anime.id %}" class="w-full sm:w-auto">
+                        <button class="w-full sm:w-auto px-4 sm:px-6 py-2 bg-purple-500 text-white text-sm sm:text-base font-medium rounded-lg
+                               transform hover:scale-105 transition-all duration-300
+                               hover:bg-purple-600 hover:shadow-lg hover:shadow-purple-300/50
+                               active:scale-95 focus:outline-none focus:ring-2
+                               focus:ring-purple-500 focus:ring-offset-2">
+                            <div class="flex items-center justify-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24"
+                                     stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                </svg>
+                                Обновить
                             </div>
-                            <div class="flex-1">
-                                <div class="flex items-center space-x-2 mb-1">
-                                    <span class="font-medium">{{ comment.user.username }}</span>
-                                    <span class="text-gray-400 text-sm">{{ comment.created_at|timesince }} ago</span>
-                                </div>
-                                <p class="text-gray-300">{{ comment.text }}</p>
-                            </div>
-                        </div>
-                    {% endfor %}
+                        </button>
+                    </a>
                 </div>
+                {% endif %}
             </div>
         </div>
-        <div class="lg:col-span-1">
-            <div class="bg-gray-800 rounded-xl p-6 mb-8">
-                <h2 class="text-xl font-bold mb-4">Рейтинг</h2>
-                <div class="flex items-center justify-center space-x-4 mb-4">
-                    <span class="text-4xl font-bold">{{ anime.average_rating }}</span>
-                    <div class="flex items-center">
-                        {% with ''|center:5 as range %}
-                            {% for _ in range %}
-                                <svg class="w-6 h-6 {% if forloop.counter <= anime.average_rating %}text-yellow-400{% else %}text-gray-600{% endif %}"
-                                     fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
-                            {% endfor %}
-                        {% endwith %}
+
+        <!-- Основной контент -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
+            <div class="lg:col-span-2">
+                <!-- Секция обзора -->
+                <div class="bg-gray-800 rounded-xl p-4 sm:p-6 mb-4 sm:mb-8">
+                    <h2 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Обзор</h2>
+                    <p class="text-gray-300 text-sm sm:text-base">{{ anime.description }}</p>
+                    <div class="flex flex-wrap gap-2 mt-2 text-sm sm:text-base">
+                        <span>{{ anime.get_status_display }}</span>
+                        <span class="hidden sm:inline">•</span>
+                        <span>{{ anime.get_type_display }}</span>
                     </div>
                 </div>
-                {% if user.is_authenticated %}
-                    <form method="post" class="flex items-center space-x-2">
-                        {% csrf_token %}
-                        <select name="rating" class="flex-1 bg-gray-700 rounded-lg p-2">
-                            <option value="" selected hidden>Выберите оценку</option>
-                            {% for i in "12345" %}
-                                <option value="{{ i }}">{{ i }} Star{% if i != "1" %}s{% endif %}</option>
-                            {% endfor %}
-                        </select>
-                        <button type="submit"
-                                class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition">
-                            Оценить
-                        </button>
-                    </form>
-                {% endif %}
-            </div>
 
-            <div class="bg-gray-800 rounded-xl p-6">
-                <h2 class="text-xl font-bold mb-4">Похожие Аниме</h2>
-                <div class="space-y-4">
-                    {% for related in related_anime %}
-                        <a href="{% url 'anime:anime_detail' related.id %}">
-                            <div class="flex space-x-3 mt-2">
-                                {% if related.images.first %}
-                                    <img src="{{ related.images.first.image.url }}" alt="{{ related.title }}"
-                                         class="w-20 h-20 object-cover rounded-lg">
+                <!-- Секция эпизодов -->
+                <div class="bg-gray-800 rounded-xl p-4 sm:p-6 mb-4 sm:mb-8">
+                    <h2 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Серии</h2>
+                    <div class="space-y-3 sm:space-y-4">
+                        {% for episode in anime.anime_episodes.all %}
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 bg-gray-700 rounded-lg hover:bg-gray-600 transition">
+                                <div class="mb-2 sm:mb-0">
+                                    <h3 class="font-medium text-sm sm:text-base">{{ episode.title }}</h3>
+                                    <p class="text-xs sm:text-sm text-gray-400">Released: {{ episode.release_date|date }}</p>
+                                </div>
+                                {% if episode.video %}
+                                    <button class="w-full sm:w-auto bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded-lg transition text-sm sm:text-base">
+                                        Смотреть сейчас
+                                    </button>
                                 {% endif %}
-                                <div>
-                                    <h3 class="font-medium text-sm">{{ related.title }}</h3>
-                                    <div class="flex items-center text-sm text-gray-400">
-                                        <span>{{ related.ratings.count }} Ratings</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Продолжение в следующем блоке... -->
+            <!-- Секция комментариев -->
+                <div class="bg-gray-800 rounded-xl p-4 sm:p-6">
+                    <h2 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Комментарии ({{ anime.comments.count }})</h2>
+
+                    {% if user.is_authenticated %}
+                        <form method="post" class="mb-6 sm:mb-8">
+                            {% csrf_token %}
+                            <textarea name="comment" rows="3" 
+                                class="w-full bg-gray-700 rounded-lg p-3 sm:p-4 text-sm sm:text-base text-white"
+                                placeholder="Ваш комментарий..."></textarea>
+                            <button type="submit"
+                                class="mt-2 w-full sm:w-auto bg-red-500 hover:bg-red-600 text-white px-4 sm:px-6 py-2 rounded-lg transition text-sm sm:text-base">
+                                Отправить
+                            </button>
+                        </form>
+                    {% endif %}
+
+                    <div class="space-y-4 sm:space-y-6">
+                        {% for comment in anime.comments.all %}
+                            <div class="flex space-x-3 sm:space-x-4">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gray-600 flex items-center justify-center text-sm sm:text-base">
+                                        {{ comment.user.username|first|upper }}
                                     </div>
                                 </div>
+                                <div class="flex-1">
+                                    <div class="flex flex-wrap items-center gap-2 mb-1">
+                                        <span class="font-medium text-sm sm:text-base">{{ comment.user.username }}</span>
+                                        <span class="text-gray-400 text-xs sm:text-sm">{{ comment.created_at|timesince }} ago</span>
+                                    </div>
+                                    <p class="text-gray-300 text-sm sm:text-base">{{ comment.text }}</p>
+                                </div>
                             </div>
-                        </a>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Боковая панель -->
+            <div class="lg:col-span-1 space-y-4 sm:space-y-8">
+                <!-- Секция рейтинга -->
+                <div class="bg-gray-800 rounded-xl p-4 sm:p-6">
+                    <h2 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Рейтинг</h2>
+                    <div class="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-4 mb-4">
+                        <span class="text-3xl sm:text-4xl font-bold">{{ anime.average_rating }}</span>
+                        <div class="flex items-center">
+                            {% with ''|center:5 as range %}
+                                {% for _ in range %}
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6 {% if forloop.counter <= anime.average_rating %}text-yellow-400{% else %}text-gray-600{% endif %}"
+                                         fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                {% endfor %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                    {% if user.is_authenticated %}
+                        <form method="post" class="flex flex-col sm:flex-row items-center gap-2">
+                            {% csrf_token %}
+                            <select name="rating" class="w-full sm:flex-1 bg-gray-700 rounded-lg p-2 text-sm sm:text-base">
+                                <option value="" selected hidden>Выберите оценку</option>
+                                {% for i in "12345" %}
+                                    <option value="{{ i }}">{{ i }} Star{% if i != "1" %}s{% endif %}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit"
+                                class="w-full sm:w-auto bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition text-sm sm:text-base">
+                                Оценить
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+
+                <!-- Секция похожих аниме -->
+                <div class="bg-gray-800 rounded-xl p-4 sm:p-6">
+                    <h2 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Похожие Аниме</h2>
+                    <div class="space-y-3 sm:space-y-4">
+                        {% for related in related_anime %}
+                            <a href="{% url 'anime:anime_detail' related.id %}" class="block hover:bg-gray-700 rounded-lg transition p-2">
+                                <div class="flex space-x-3">
+                                    {% if related.images.first %}
+                                        <img src="{{ related.images.first.image.url }}" alt="{{ related.title }}"
+                                             class="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg">
+                                    {% endif %}
+                                    <div class="flex flex-col justify-center">
+                                        <h3 class="font-medium text-sm sm:text-base">{{ related.title }}</h3>
+                                        <div class="flex items-center text-xs sm:text-sm text-gray-400">
+                                            <span>{{ related.ratings.count }} Ratings</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+
+{% block scripts %}
+    {{ block.super }}
+{% endblock %}
 {% endblock %}

@@ -11,16 +11,17 @@ class Genre(models.Model):
 
 class Anime(models.Model):
     STATUS_CHOICES = (
+        ('', 'Выберите статус'),
         ('ongoing', 'Онгоинг'),
         ('completed', 'Завершено'),
         ('announced', 'Анонс'),
     )
     TYPE_CHOICES = [
+        ('', 'Выберите тип'),
         ('movie', 'Фильм'),
         ('tv', 'Тв Сериал'),
         ('ova', 'OVA'),
         ('ona', 'Спешл'),
-
     ]
 
     title = models.CharField(max_length=255, verbose_name='Название')
@@ -28,8 +29,21 @@ class Anime(models.Model):
     release_date = models.DateField(verbose_name='Дата релиза')
     episodes = models.IntegerField(default=0)
     genres = models.ManyToManyField(Genre, related_name='animes')
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='tv')
-    type = models.CharField(max_length=10, choices=TYPE_CHOICES)
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        null=True,
+        blank=True,
+        verbose_name='Статус аниме'
+    )
+    type = models.CharField(
+        max_length=10,
+        choices=TYPE_CHOICES,
+        null=True,
+        blank=True,
+        verbose_name='Тип аниме',
+
+    )
 
     def __str__(self):
         return self.title

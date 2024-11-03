@@ -1,45 +1,80 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-	{{ block.super }} Создать
+    Добавить - {{ object.title }}
 {% endblock %}
 {% block content %}
     <div class="container mx-auto px-4 py-8">
-        <form method="POST" enctype="multipart/form-data"
-              class="max-w-2xl mx-auto bg-gray-800 p-6 rounded-lg shadow-lg">
+        <form method="POST" action="{% url 'anime:anime_create' %}" enctype="multipart/form-data"
+              class="max-w-2xl mx-auto bg-gray-800 p-6 rounded-lg shadow-lg" novalidate>
             {% csrf_token %}
             <h2 class="text-2xl font-bold mb-6 flex items-center">
                 <div class="w-1 h-8 bg-red-500 mr-2"></div>
-                Добавить новое Аниме
+                Добавить Аниме
             </h2>
             <div class="space-y-4 mb-6">
                 <div>
-                    <label class="block text-sm font-medium mb-2">Название:</label>
+                    <label class="block text-sm font-medium mb-2">{{ form.title.label }}:</label>
                     {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="mt-1 p-2 rounded bg-red-500/10 border border-red-500">
+                            {% for error in form.title.errors %}
+                                <p class="text-red-500 text-sm">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
-                <div class="">
-                    <label class="block text-sm font-medium mb-2">Описание:</label>
+                <div>
+                    <label class="block text-sm font-medium mb-2">{{ form.description.label }}:</label>
                     {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="mt-1 p-2 rounded bg-red-500/10 border border-red-500">
+                            {% for error in form.description.errors %}
+                                <p class="text-red-500 text-sm">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium mb-2">Дата выхода:</label>
+                        <label class="block text-sm font-medium mb-2">{{ form.release_date.label }}:</label>
                         {{ form.release_date }}
+                        {% if form.release_date.errors %}
+                            <div class="mt-1 p-2 rounded bg-red-500/10 border border-red-500">
+                                {% for error in form.release_date.errors %}
+                                    <p class="text-red-500 text-sm">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2">Епизоды:</label>
-                       {{ form.episodes }}
+                        <label class="block text-sm font-medium mb-2">{{ form.episodes.label }}:</label>
+                        {{ form.episodes }}
+                        {% if form.episodes.errors %}
+                            <div class="mt-1 p-2 rounded bg-red-500/10 border border-red-500">
+                                {% for error in form.episodes.errors %}
+                                    <p class="text-red-500 text-sm">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
             <div class="mb-6">
-                <label class="block text-sm font-medium mb-2">Жанры:</label>
+                <label class="block text-sm font-medium mb-2">{{ form.genres.label }}:</label>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
                     {{ form.genres }}
                 </div>
+                {% if form.genres.errors %}
+                    <div class="mt-1 p-2 rounded bg-red-500/10 border border-red-500">
+                        {% for error in form.genres.errors %}
+                            <p class="text-red-500 text-sm">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
             <div class="mb-6">
-                <label class="block text-sm font-medium mb-2">Изображения:</label>
+                <label class="block text-sm font-medium mb-2">{{ form.images.label }}:</label>
                 <div class="space-y-4">
                     {% if object %}
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -52,8 +87,6 @@
                                              viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                   d="M6 18L18 6M6 6l12 12"/>
-
-
                                         </svg>
                                     </button>
                                 </div>
@@ -61,25 +94,49 @@
                         </div>
                     {% endif %}
                     {{ form.images }}
+                    {% if form.images.errors %}
+                        <div class="mt-1 p-2 rounded bg-red-500/10 border border-red-500">
+                            {% for error in form.images.errors %}
+                                <p class="text-red-500 text-sm">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
 
-
             <div class="mb-6">
-                <label class="block text-sm font-medium mb-2">Статус:</label>
+                <label class="block text-sm font-medium mb-2">{{ form.type.label }}:</label>
                 {{ form.type }}
+                {% if form.type.errors %}
+                    <div class="mt-1 p-2 rounded bg-red-500/10 border border-red-500">
+                        {% for error in form.type.errors %}
+                            <p class="text-red-500 text-sm">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
             <div class="mb-6">
-                <label class="block text-sm font-medium mb-2">Тип:</label>
+                <label class="block text-sm font-medium mb-2">{{ form.status.label }}:</label>
                 {{ form.status }}
+                {% if form.status.errors %}
+                    <div class="mt-1 p-2 rounded bg-red-500/10 border border-red-500">
+                        {% for error in form.status.errors %}
+                            <p class="text-red-500 text-sm">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
             <div class="flex justify-end">
                 <button type="submit"
                         class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg transition duration-200">
-                   Создать Аниме
+                   Создать
                 </button>
             </div>
         </form>
     </div>
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static 'core/ajax.js' %}"></script>
+{% endblock %}
 {% endblock %}

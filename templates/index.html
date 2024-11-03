@@ -5,27 +5,10 @@
 {% endblock %}
 {% block styles %}
     <link rel="stylesheet" href="{% static 'core/carousel.css' %}">
-
 {% endblock %}
 
 {% block content %}
-    {% if messages %}
-    {% for message in messages %}
-        <div class="mb-3 mt-4
-            {% if message.tags == 'error' %}
-                bg-red-800 text-red-100 border-l-4 border-red-600
-            {% elif message.tags == 'warning' %}
-                bg-yellow-800 text-yellow-100 border-l-4 border-yellow-600
-            {% elif message.tags == 'success' %}
-                bg-green-800 text-green-100 border-l-4 border-green-600
-            {% else %}
-                bg-blue-800 text-blue-100 border-l-4 border-blue-600
-            {% endif %}
-            p-4" role="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endif %}
+    {% include 'components/messages.html' %}
     <div id="carousel" class="carousel-container relative h-[600px] py-12 my-12 overflow-hidden touch-pan-y">
         <div class="relative h-full">
             <button class="carousel-nav-button prev">
@@ -70,37 +53,6 @@
                     </div>
                 </div>
                 {% endfor %}
-                {% for banner in banner_anime %}
-                <div class="slide active">
-                    <img src="{{ banner.images.first.image.url }}" alt="Another Anime" class="w-full h-full object-cover">
-                    <div class="gradient-overlay absolute inset-0">
-                        <div class="slide-content absolute bottom-32 left-16 text-white max-w-3xl">
-                            <div class="mb-6">
-                                <span class="badge">{{ banner.get_status_display }}</span>
-                                <span class="badge">{{ banner.get_type_display }}</span>
-                            </div>
-                            <h2 class="title">
-                                Another Epic<br>{{ banner.title }}
-                            </h2>
-                            <p class="description">
-                                {{ banner.description|truncatewords:5 }}...
-                            </p>
-                            <a href="{% url 'anime:anime_detail' banner.id %}">
-                            <button class="watch-now">
-                                <span>Смотреть</span>
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     class="icon"
-                                     fill="none"
-                                     viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M9 5l7 7-7 7"/>
-                                </svg>
-                            </button></a>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            
             </div>
         </div>
     </div>
@@ -154,7 +106,7 @@
                                                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
                                                     <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                                                 </svg>
-                                                <span>91:41</span>
+                                                <span>1</span>
                                             </span>
                                             </div>
                                             <a href="{% url 'anime:anime_detail' item.id %}">
@@ -230,7 +182,7 @@
                                                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
                                                     <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                                                 </svg>
-                                                <span>91:41</span>
+                                                <span>1</span>
                                             </span>
                                             </div>
                                             <a href="{% url 'anime:anime_detail' item.id %}">
@@ -290,7 +242,7 @@
                                             <img src="{{ view.images.first.image.url }}" alt="Anime Thumbnail"
                                                  class="w-32 h-24 object-cover rounded-lg transform group-hover:scale-105 transition-transform duration-300">
                                             <div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm text-xs px-2 py-1 rounded-full">
-                                                91:41
+                                                1
                                             </div>
                                         </div>
                                         <div class="flex-1">
@@ -318,6 +270,5 @@
 {% endblock %}
 {% block scripts %}
     {{ block.super }}
-    <script src="{% static 'core/carousel.js' %}">
+    <script src="{% static 'core/carousel.js' %}"></script>
 {% endblock %}
-

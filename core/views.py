@@ -56,7 +56,7 @@ def anime_detail(request, pk):
 
     if request.method == 'POST':
         if not request.user.is_authenticated:
-            messages.error(request, 'Please login to perform this action.')
+            messages.error(request, 'Не хватает прав доступа!')
             return redirect('login')
         if 'rating' in request.POST:
             score = request.POST.get('rating')
@@ -66,7 +66,7 @@ def anime_detail(request, pk):
                     user=request.user,
                     defaults={'score': int(score)}
                 )
-                messages.success(request, 'Rating submitted successfully!')
+                messages.success(request, 'Успешно дана оценка!')
         elif 'comment' in request.POST:
             comment_text = request.POST.get('comment')
             if comment_text:
@@ -75,7 +75,7 @@ def anime_detail(request, pk):
                     user=request.user,
                     text=comment_text
                 )
-                messages.success(request, 'Comment posted successfully!')
+                messages.success(request, 'Комментарий успешно опубликован!')
 
         return redirect('anime:anime_detail', pk=pk)
 
@@ -97,6 +97,8 @@ def anime_create(request):
             for image in images:
                 Image.objects.create(anime=anime, image=image)
 
+            messages.success(request, f'Аниме "{anime.title}" успешно добавлено!')
+
             return redirect('anime:anime_detail', pk=anime.pk)
 
     context = {
@@ -107,7 +109,7 @@ def anime_create(request):
 
 def anime_update(request, pk):
     anime = get_object_or_404(Anime, pk=pk)
-
+    form = AnimeForm(instance=anime)
     if request.method == 'POST':
         form = AnimeForm(request.POST, request.FILES, instance=anime)
         if form.is_valid():
@@ -115,9 +117,8 @@ def anime_update(request, pk):
             images = request.FILES.getlist('images')
             for image in images:
                 Image.objects.create(anime=anime, image=image)
-
-    else:
-        form = AnimeForm(instance=anime)
+            messages.success(request, f'Аниме "{anime.title}" успешно обновлено!')
+            return redirect('anime:anime_detail', anime.pk)
 
     context = {
         'form': form,
@@ -137,7 +138,9 @@ def delete_image(request, image_id):
 
 def anime_delete(request, pk):
     anime = get_object_or_404(Anime, id=pk)
+    title = anime.title
     anime.delete()
+    messages.success(request, f'Аниме "{title}" успешно удалено!')
     return redirect('anime:home')
 
 

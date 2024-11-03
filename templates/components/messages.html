@@ -1,6 +1,6 @@
 {% if messages %}
     {% for message in messages %}
-        <div class="mb-3 mt-4
+        <div class="message-container relative mb-3 mt-4 
             {% if message.tags == 'error' %}
                 bg-red-800 text-red-100 border-l-4 border-red-600
             {% elif message.tags == 'warning' %}
@@ -11,7 +11,84 @@
                 bg-blue-800 text-blue-100 border-l-4 border-blue-600
             {% endif %}
             p-4" role="alert">
-            {{ message }}
+            
+            <!-- Кнопка закрытия -->
+            <button class="close-btn absolute top-2 right-2 transition-transform hover:rotate-90">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"></path>
+                </svg>
+            </button>
+
+            <!-- Сообщение -->
+            <div class="pr-6">
+                {{ message }}
+            </div>
+
+            <!-- Прогресс-бар -->
+            <div class="progress-bar absolute bottom-0 left-0 h-1 w-full 
+                {% if message.tags == 'error' %}
+                    bg-red-600
+                {% elif message.tags == 'warning' %}
+                    bg-yellow-600
+                {% elif message.tags == 'success' %}
+                    bg-green-600
+                {% else %}
+                    bg-blue-600
+                {% endif %}">
+            </div>
         </div>
     {% endfor %}
 {% endif %}
+
+<style>
+    @keyframes slideOut {
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+
+    @keyframes progress {
+        to {
+            width: 0%;
+        }
+    }
+
+    .message-container {
+        animation: slideIn 0.3s ease-out;
+    }
+
+    .progress-bar {
+        animation: progress 5s linear forwards;
+    }
+
+    .close-btn:hover {
+        transform: rotate(90deg);
+        transition: transform 0.3s ease;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const messages = document.querySelectorAll('.message-container');
+    
+    messages.forEach(message => {
+        // Автоматическое закрытие через 5 секунд
+        setTimeout(() => {
+            message.style.animation = 'slideOut 0.3s ease-out forwards';
+            setTimeout(() => {
+                message.remove();
+            }, 300);
+        }, 5000);
+
+        // Обработчик клика по кнопке закрытия
+        const closeBtn = message.querySelector('.close-btn');
+        closeBtn.addEventListener('click', () => {
+            message.style.animation = 'slideOut 0.3s ease-out forwards';
+            setTimeout(() => {
+                message.remove();
+            }, 300);
+        });
+    });
+});
+</script>
