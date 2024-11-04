@@ -4,14 +4,14 @@
         <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill="white" d="M3 11.25h17.25v1.5H3v-1.5zm0-6h12v1.5H3v-1.5zm0 12h12v1.5H3v-1.5z"/>
         </svg>
-
     </button>
+
     <a href="{% url 'anime:home' %}" class="text-xl sm:text-2xl font-bold z-20">
         <span class="text-white">Ani</span><span class="text-red-500">me</span>
     </a>
 
     <!-- Десктопное меню -->
-    <div class="hidden lg:flex items-center space-x-6 xl:space-x-12">
+    <div class="hidden lg:flex items-center space-x-8">
         <a href="{% url 'anime:home' %}" class="text-gray-400 nav-link hover:text-white transition-colors">
             Главная
         </a>
@@ -25,25 +25,20 @@
                 </svg>
             </button>
             <div class="absolute hidden group-hover:grid grid-cols-2 gap-2 bg-gray-800 p-4 w-96 rounded-md shadow-lg z-20 mt-1">
-                <a href=""
-                   class="text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md transition-colors">
+                <a href="" class="text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md transition-colors">
                     Боевик
                 </a>
-                <a href=""
-                   class="text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md transition-colors">
+                <a href="" class="text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md transition-colors">
                     Комедия
                 </a>
-                <a href=""
-                   class="text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md transition-colors">
+                <a href="" class="text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md transition-colors">
                     Драма
                 </a>
-                <a href=""
-                   class="text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md transition-colors">
+                <a href="" class="text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md transition-colors">
                     Фэнтези
                 </a>
                 <div class="col-span-2 border-t border-gray-700 mt-2 pt-2">
-                    <a href=""
-                       class="text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md transition-colors block text-center">
+                    <a href="" class="text-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md transition-colors block text-center">
                         Все жанры
                     </a>
                 </div>
@@ -54,12 +49,13 @@
         </a>
     </div>
 
-    <!-- Поиск -->
-    <div class="flex items-center space-x-4 sm:space-x-6">
+    <!-- Поиск и профиль -->
+    <div class="flex items-center gap-4">
         <div class="hidden lg:inline-flex relative">
             <input type="text" placeholder="Поиск.."
                    class="search-input bg-gray-800 text-white rounded-full py-2 px-4 pr-10 focus:outline-none focus:ring-2 focus:ring-red-500 w-40 xl:w-48"/>
         </div>
+
         <!-- Профиль -->
         <button onclick="toggleProfileMenu()" class="text-gray-400 hover:text-white transition-colors"
                 aria-label="Открыть меню профиля">
@@ -71,7 +67,7 @@
         </button>
 
         <!-- Модальное меню профиля -->
-        <div id="profileMenu" class="fixed inset-0 z-20 hidden">
+        <div id="profileMenu" class="fixed inset-0 z-40 hidden">
             <!-- Затемненный фон -->
             <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="toggleProfileMenu()"></div>
 
@@ -116,8 +112,7 @@
 
                         <!-- Навигация -->
                         <nav class="space-y-1">
-                            <a href=""
-                               class="flex items-center space-x-3 text-gray-400 hover:bg-gray-800 hover:text-white p-3 rounded-lg transition-colors active:bg-gray-700">
+                            <a href="" class="flex items-center space-x-3 text-gray-400 hover:bg-gray-800 hover:text-white p-3 rounded-lg transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none"
                                      viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -125,8 +120,7 @@
                                 </svg>
                                 <span class="flex-1">Мой профиль</span>
                             </a>
-                            <a href=""
-                               class="flex items-center space-x-3 text-gray-400 hover:bg-gray-800 hover:text-white p-3 rounded-lg transition-colors">
+                            <a href="" class="flex items-center space-x-3 text-gray-400 hover:bg-gray-800 hover:text-white p-3 rounded-lg transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                      viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -134,8 +128,7 @@
                                 </svg>
                                 <span>Избранное</span>
                             </a>
-                            <a href="{% url 'anime:anime_create' %}"
-                               class="flex items-center space-x-3 text-gray-400 hover:bg-gray-800 hover:text-white p-3 rounded-lg transition-colors">
+                            <a href="{% url 'anime:anime_create' %}" class="flex items-center space-x-3 text-gray-400 hover:bg-gray-800 hover:text-white p-3 rounded-lg transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                      viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -143,8 +136,7 @@
                                 </svg>
                                 <span>Добавить аниме</span>
                             </a>
-                            <a href=""
-                               class="flex items-center space-x-3 text-gray-400 hover:bg-gray-800 hover:text-white p-3 rounded-lg transition-colors">
+                            <a href="" class="flex items-center space-x-3 text-gray-400 hover:bg-gray-800 hover:text-white p-3 rounded-lg transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                      viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -152,8 +144,7 @@
                                 </svg>
                                 <span>История просмотров</span>
                             </a>
-                            <a href=""
-                               class="flex items-center space-x-3 text-gray-400 hover:bg-gray-800 hover:text-white p-3 rounded-lg transition-colors">
+                            <a href="" class="flex items-center space-x-3 text-gray-400 hover:bg-gray-800 hover:text-white p-3 rounded-lg transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                      viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -166,8 +157,7 @@
 
                             <div class="border-t border-gray-800 my-4"></div>
 
-                            <a href=""
-                               class="flex items-center space-x-3 text-gray-400 hover:bg-gray-800 hover:text-white p-3 rounded-lg transition-colors active:bg-gray-700">
+                            <a href="" class="flex items-center space-x-3 text-gray-400 hover:bg-gray-800 hover:text-white p-3 rounded-lg transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none"
                                      viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -177,13 +167,11 @@
                             </a>
                         </nav>
                     {% else %}
-                        <div class="space-y-4 p-4">
-                            <a href=""
-                               class="block w-full text-center bg-red-500 hover:bg-red-600 active:bg-red-700 text-white py-3 px-4 rounded-lg transition-colors font-medium">
+                        <div class="space-y-4">
+                            <a href="" class="block w-full text-center bg-red-500 hover:bg-red-600 active:bg-red-700 text-white py-3 px-4 rounded-lg transition-colors font-medium">
                                 Войти
                             </a>
-                            <a href=""
-                               class="block w-full text-center border-2 border-red-500text-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 py-3 px-4 rounded-lg transition-colors font-medium">
+                            <a href="" class="block w-full text-center border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white active:bg-red-600 py-3 px-4 rounded-lg transition-colors font-medium">
                                 Регистрация
                             </a>
                         </div>
@@ -193,7 +181,7 @@
         </div>
 
         <!-- Мобильное меню -->
-        <div class="mobile-menu fixed top-0 left-0 w-64 h-screen bg-[#0f0f23] z-50 lg:hidden pt-20 px-6 border-r border-gray-800 transform -translate-x-full transition-transform duration-300">
+        <div class="mobile-menu fixed top-0 left-0 w-64 h-screen bg-[#0f0f23] z-40 lg:hidden pt-20 px-6 border-r border-gray-800 transform -translate-x-full transition-transform duration-300">
             <div class="flex flex-col space-y-6">
                 <div class="relative mb-4">
                     <input type="text"
@@ -209,14 +197,14 @@
                     </button>
                 </div>
                 <a href="{% url 'anime:home' %}"
-                   class="block text-gray-400 nav-link hover:text-white transition-colors">
+                   class="block text-gray-400 hover:text-white transition-colors">
                     Главная
                 </a>
 
                 <!-- Мобильное меню жанров -->
                 <div class="relative">
                     <button onclick="toggleGenres()"
-                            class="text-gray-400 flex items-center justify-between w-full nav-link hover:text-white transition-colors">
+                            class="text-gray-400 flex items-center justify-between w-full hover:text-white transition-colors">
                         <span>Жанры</span>
                         <svg xmlns="http://www.w3.org/2000/svg"
                              class="h-4 w-4 genre-arrow transition-transform duration-300"
@@ -226,23 +214,19 @@
                         </svg>
                     </button>
                     <div class="genres-submenu hidden mt-4 ml-4 space-y-4">
-                        <a href=""
-                           class="block text-gray-400 nav-link hover:text-white transition-colors">Боевик</a>
-                        <a href=""
-                           class="block text-gray-400 nav-link hover:text-white transition-colors">Комедия</a>
-                        <a href="" class="block text-gray-400 nav-link hover:text-white transition-colors">Драма</a>
-                        <a href=""
-                           class="block text-gray-400 nav-link hover:text-white transition-colors">Фэнтези</a>
-                        <a href="" class="block text-gray-400 nav-link hover:text-white transition-colors">Ужасы</a>
-                        <a href="" class="block text-gray-400 nav-link hover:text-white transition-colors">Все
-                            жанры</a>
+                        <a href="" class="block text-gray-400 hover:text-white transition-colors">Боевик</a>
+                        <a href="" class="block text-gray-400 hover:text-white transition-colors">Комедия</a>
+                        <a href="" class="block text-gray-400 hover:text-white transition-colors">Драма</a>
+                        <a href="" class="block text-gray-400 hover:text-white transition-colors">Фэнтези</a>
+                        <a href="" class="block text-gray-400 hover:text-white transition-colors">Ужасы</a>
+                        <a href="" class="block text-gray-400 hover:text-white transition-colors">Все жанры</a>
                     </div>
                 </div>
-                <a href="#" class="block text-gray-400 nav-link hover:text-white transition-colors">
+                <a href="#" class="block text-gray-400 hover:text-white transition-colors">
                     О нас
                 </a>
             </div>
         </div>
-        <div class="overlay fixed inset-0 bg-black/50 z-40 hidden lg:hidden" onclick="toggleMenu()"></div>
+        <div class="overlay fixed inset-0 bg-black/50 z-30 hidden lg:hidden" onclick="toggleMenu()"></div>
     </div>
 </nav>

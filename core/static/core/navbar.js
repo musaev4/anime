@@ -5,10 +5,19 @@ const overlay = document.querySelector('.overlay');
 const body = document.body;
 
 // Обработчик для мобильного меню
+function toggleMenu() {
+    if (!mobileMenu || !hamburger || !overlay) return;
 
+    mobileMenu.classList.toggle('-translate-x-full');
+    hamburger.classList.toggle('active');
+    overlay.classList.toggle('hidden');
+    body.style.overflow = !mobileMenu.classList.contains('-translate-x-full') ? 'hidden' : '';
+}
+
+// Обработчик для профиля
 function toggleProfileMenu() {
     const menu = document.getElementById('profileMenu');
-    const menuContent = menu.querySelector('.absolute.right-0');
+    const menuContent = menu.querySelector('div:last-child');
 
     if (menu.classList.contains('hidden')) {
         // Открываем меню
@@ -17,40 +26,16 @@ function toggleProfileMenu() {
         setTimeout(() => {
             menuContent.classList.remove('translate-x-full');
         }, 10);
+        body.style.overflow = 'hidden';
     } else {
         // Закрываем меню
         menuContent.classList.add('translate-x-full');
         // Ждем окончания анимации перед скрытием
         setTimeout(() => {
             menu.classList.add('hidden');
+            body.style.overflow = '';
         }, 300);
     }
-}
-
-// Закрытие меню при нажатии ESC
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        const menu = document.getElementById('profileMenu');
-        if (!menu.classList.contains('hidden')) {
-            toggleProfileMenu();
-        }
-    }
-});
-function toggleMenu() {
-    if (!mobileMenu || !hamburger || !overlay) return;
-
-    // Переключаем классы для анимации
-    mobileMenu.classList.toggle('active');
-    mobileMenu.classList.toggle('-translate-x-full');
-    hamburger.classList.toggle('active');
-    overlay.classList.toggle('hidden');
-
-    // Управление скроллом body
-    body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-
-    // Добавляем плавную анимацию гамбургера
-    const lines = hamburger.querySelectorAll('.hamburger-line');
-    lines.forEach(line => line.classList.toggle('active'));
 }
 
 // Обработчик для жанров
@@ -61,15 +46,28 @@ function toggleGenres() {
     if (!submenu || !arrow) return;
 
     submenu.classList.toggle('hidden');
-
-    // Плавная анимация стрелки
     arrow.style.transition = 'transform 0.3s ease';
-    arrow.style.transform = submenu.classList.contains('hidden') ? '' : 'rotate(90deg)';
+    arrow.style.transform = submenu.classList.contains('hidden') ? '' : 'rotate(180deg)';
 }
+
+// Закрытие меню при нажатии ESC
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const menu = document.getElementById('profileMenu');
+        if (!menu.classList.contains('hidden')) {
+            toggleProfileMenu();
+        }
+
+        if (!mobileMenu.classList.contains('-translate-x-full')) {
+            toggleMenu();
+        }
+    }
+});
 
 // Закрытие меню при клике вне его
 document.addEventListener('click', (e) => {
-    if (mobileMenu && mobileMenu.classList.contains('active')) {
+    // Для мобильного меню
+    if (mobileMenu && !mobileMenu.classList.contains('-translate-x-full')) {
         const isClickInsideMenu = mobileMenu.contains(e.target);
         const isHamburgerClick = hamburger.contains(e.target);
 
@@ -77,12 +75,31 @@ document.addEventListener('click', (e) => {
             toggleMenu();
         }
     }
+
+    // Для меню профиля
+    const profileMenu = document.getElementById('profileMenu');
+    if (!profileMenu.classList.contains('hidden')) {
+        const menuContent = profileMenu.querySelector('div:last-child');
+        const isClickInsideProfileMenu = menuContent.contains(e.target);
+        const isProfileButtonClick = e.target.closest('[onclick="toggleProfileMenu()"]');
+
+        if (!isClickInsideProfileMenu && !isProfileButtonClick) {
+            toggleProfileMenu();
+        }
+    }
 });
 
 // Закрытие меню при изменении размера экрана
 window.addEventListener('resize', () => {
-    if (window.innerWidth >= 1024 && mobileMenu.classList.contains('active')) {
-        toggleMenu();
+    if (window.innerWidth >= 1024) {
+        if (!mobileMenu.classList.contains('-translate-x-full')) {
+            toggleMenu();
+        }
+
+        const profileMenu = document.getElementById('profileMenu');
+        if (!profileMenu.classList.contains('hidden')) {
+            toggleProfileMenu();
+        }
     }
 });
 
@@ -93,28 +110,12 @@ style.textContent = `
         transition: transform 0.3s ease-in-out;
     }
 
-    .hamburger-line {
-        transition: all 0.3s ease-in-out;
-    }
-
-    .hamburger.active .line1 {
-        transform: rotate(45deg) translate(5px, 5px);
-    }
-
-    .hamburger.active .line2 {
-        opacity: 0;
-    }
-
-    .hamburger.active .line3 {
-        transform: rotate(-45deg) translate(5px, -5px);
+    .genre-arrow {
+        transition: transform 0.3s ease-in-out;
     }
 
     .overlay {
         transition: opacity 0.3s ease-in-out;
-    }
-
-    .category-arrow {
-        transition: transform 0.3s ease-in-out;
     }
 `;
 document.head.appendChild(style);

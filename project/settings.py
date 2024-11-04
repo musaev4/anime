@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -123,3 +124,154 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.ngrok-free.app',
     'http://*.ngrok-free.app'
 ]
+
+# settings.py
+
+JAZZMIN_SETTINGS = {
+    # Заголовок на странице авторизации (строка)
+    "site_title": "Anime",
+
+    # Заголовок в админ-панели (строка)
+    "site_header": "Anime Portal",
+
+    # Название в меню (строка)
+    "site_brand": "Anime Admin",
+
+    # Логотип для вашего сайта должен быть в static
+    # "site_logo": "books/img/logo.png",
+
+    # CSS классы для логотипа
+    "site_logo_classes": "img-circle",
+
+    # Относительный путь к логотипу для входа в систему
+    # "login_logo": None,
+
+    # Относительный путь к фавиконке
+    # "site_icon": None,
+
+    # Приветственное сообщение на странице входа
+    "welcome_sign": "Добро пожаловать в админ-панель аниме",
+
+    # Copyright на странице входа
+    "copyright": "Anime Portal Ltd",
+
+    # Модель для пользовательского меню
+    "user_avatar": None,
+
+    ############
+    # Top Menu #
+    ############
+    # Ссылки для быстрого доступа
+    "topmenu_links": [
+        {"name": "Главная", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Сайт", "url": "/", "new_window": True},
+    ],
+
+    #############
+    # Side Menu #
+    #############
+    # Настройка бокового меню
+    "show_sidebar": True,
+    "navigation_expanded": True,
+
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "admin.LogEntry": "fas fa-file",
+
+        # Иконки для ваших моделей
+        "Anime": "fas fa-film",
+        "Genre": "fas fa-tags",
+        "Episode": "fas fa-play-circle",
+        "Image": "fas fa-image",
+        "Rating": "fas fa-star",
+        "Comment": "fas fa-comments",
+        "AnimeView": "fas fa-eye",
+        "EpisodeView": "fas fa-eye",
+    },
+
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+
+    # Группировка моделей в меню
+    "order_with_respect_to": [
+        "auth",
+        # Аниме контент
+        "Anime",
+        "Episode",
+        "Genre",
+        "Image",
+        # Пользовательская активность
+        "Rating",
+        "Comment",
+        "AnimeView",
+        "EpisodeView",
+    ],
+
+    "custom_links": {
+        "anime": [{
+            "name": "Статистика просмотров",
+            "url": "admin:index",
+            "icon": "fas fa-chart-line",
+        }]
+    },
+
+    # Настройка тем оформления
+    "theme": "default",
+    "dark_mode_theme": "darkly",
+
+    # Пользовательские CSS/JS
+    "custom_css": None,
+    "custom_js": None,
+
+    # Скрыть приложения
+    "hide_apps": [],
+
+    # Скрыть модели
+    "hide_models": [],
+
+    # Настройка поиска
+    "search_model": "auth.User",
+
+    # Конфигурация списка
+    "changeform_format": "horizontal_tabs",
+    "changeform_format_overrides": {
+        "auth.user": "collapsible",
+        "auth.group": "vertical_tabs",
+    }
+}
+
+# Настройки UI
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "navbar-primary",
+    "accent": "accent-primary",
+    "navbar": "navbar-dark",
+    "no_navbar_border": False,
+    "navbar_fixed": False,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": False,
+    "sidebar": "sidebar-dark-primary",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "default",
+    "dark_mode_theme": "darkly",
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    }
+}
+
