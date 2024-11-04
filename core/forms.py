@@ -11,12 +11,17 @@ class AnimeForm(forms.ModelForm):
         label='Изображения',
         required=False,
         widget=forms.FileInput(attrs={
-            'class': '''block w-full text-sm text-gray-400
-                                file:mr-4 file:py-2 file:px-4
-                                file:rounded-full file:border-0
-                                file:text-sm file:font-semibold
-                                file:bg-red-500 file:text-white
-                                hover:file:bg-red-600'''
+            'class': 'block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 '
+                     'file:rounded-full file:border-0 file:text-sm file:font-semibold '
+                     'file:bg-red-500 file:text-white hover:file:bg-red-600',
+            'style': '''
+                appearance: none;
+                background-color: transparent;
+                border: none;
+                padding: 0;
+                outline: none;
+            '''
+
         })
     )
 

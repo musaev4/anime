@@ -9,53 +9,7 @@
 
 {% block content %}
     {% include 'components/messages.html' %}
-    <div id="carousel" class="carousel-container relative h-[600px] py-12 my-12 overflow-hidden touch-pan-y">
-        <div class="relative h-full">
-            <button class="carousel-nav-button prev">
-                <svg viewBox="0 0 24 24">
-                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-                </svg>
-            </button>
-
-            <button class="carousel-nav-button next">
-                <svg viewBox="0 0 24 24">
-                    <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
-                </svg>
-            </button>
-            <div class="slides">
-                {% for banner in banner_anime %}
-                <div class="slide active">
-                    <img src="{{ banner.images.first.image.url }}" alt="Another Anime" class="w-full h-full object-cover">
-                    <div class="gradient-overlay absolute inset-0">
-                        <div class="slide-content absolute bottom-32 left-16 text-white max-w-3xl">
-                            <div class="mb-6">
-                                <span class="badge">{{ banner.get_status_display }}</span>
-                                <span class="badge">{{ banner.get_type_display }}</span>
-                            </div>
-                            <h2 class="title">
-                                <br>{{ banner.title }}
-                            </h2>
-                            <p class="description">
-                                {{ banner.description|truncatewords:5 }}...
-                            </p>
-                            <a href="{% url 'anime:anime_detail' banner.id %}">
-                            <button class="watch-now">
-                                <span>Смотреть</span>
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     class="icon"
-                                     fill="none"
-                                     viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M9 5l7 7-7 7"/>
-                                </svg>
-                            </button></a>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
+    {% include 'components/carousel.html' %}
 
     <div class="container mx-auto">
         <div class="flex flex-col lg:flex-row gap-6">
